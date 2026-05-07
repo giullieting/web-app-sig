@@ -1,0 +1,9 @@
+# Deploy estático: arquivos na raiz do repositório (main.html, imagens, etc.)
+[build]
+  publish = "."
+
+# Abre o site em / usando main.html (evita 404 quando não existe index.html)
+[[redirects]]
+  from = "/"
+  to = "/main.html"
+  status = 200

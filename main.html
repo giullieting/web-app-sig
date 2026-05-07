@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posicionamento Digital — Guia Estratégico</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --accent: #e8c547;
+    --accent2: #7c5cbf;
+    --accent3: #3ecfcf;
+    --text: #e8e4dc;
+    --muted: #8a8799;
+    --border: rgba(232,197,71,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 60% at 80% 20%, rgba(124,92,191,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(62,207,207,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 50% 50%, rgba(232,197,71,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(232,197,71,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,197,71,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 8rem);
+    font-weight: 900;
+    line-height: 0.95;
+    max-width: 900px;
+    position: relative;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    margin-top: 2.5rem;
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.8;
+  }
+
+  .hero-scroll {
+    margin-top: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  .scroll-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    animation: pulse-line 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-line {
+    0%, 100% { opacity: 0.4; width: 60px; }
+    50% { opacity: 1; width: 90px; }
+  }
+
+  /* INDEX */
+  .index-bar {
+    display: flex;
+    gap: 0;
+    padding: 0 3rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .index-item {
+    padding: 1.2rem 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    border-right: 1px solid var(--border);
+    transition: color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .index-item:first-child { border-left: 1px solid var(--border); }
+
+  .index-item .num {
+    color: var(--accent);
+    font-size: 0.6rem;
+  }
+
+  .index-item:hover {
+    color: var(--accent);
+    background: rgba(232,197,71,0.04);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label .num {
+    font-size: 0.55rem;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 2px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+  }
+
+  h2 em { font-style: italic; color: var(--accent); }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+
+  p { color: var(--muted); margin-bottom: 1.2rem; font-size: 1rem; }
+
+  /* GRID LAYOUTS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgba(232,197,71,0.4);
+    transform: translateY(-2px);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-num {
+    position: absolute;
+    top: 1.2rem; right: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--border);
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: linear-gradient(135deg, rgba(232,197,71,0.08), rgba(124,92,191,0.06));
+    border: 1px solid rgba(232,197,71,0.25);
+    border-radius: 2px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .highlight::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem; left: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: var(--accent);
+    opacity: 0.2;
+    line-height: 1;
+  }
+
+  .highlight p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .compare-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    color: var(--accent);
+  }
+
+  .compare-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(232,197,71,0.06);
+    color: var(--muted);
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .compare-table td:first-child {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* TAG PILLS */
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.8rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .tag.accent { border-color: rgba(232,197,71,0.4); color: var(--accent); }
+  .tag.purple { border-color: rgba(124,92,191,0.4); color: #b09de0; }
+  .tag.teal { border-color: rgba(62,207,207,0.4); color: var(--accent3); }
+
+  /* METRIC CARDS */
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .metric-card .metric-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-card .metric-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* EXPERT CARD */
+  .expert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    transition: border-color 0.3s;
+  }
+
+  .expert-card:hover { border-color: rgba(124,92,191,0.4); }
+
+  .expert-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .expert-info h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+  .expert-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+  .expert-info p { font-size: 0.85rem; margin: 0; }
+
+  /* TREND ITEMS */
+  .trend-item {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .trend-item:last-child { border-bottom: none; }
+
+  .trend-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    min-width: 70px;
+    transition: color 0.3s;
+  }
+
+  .trend-item:hover .trend-num { color: var(--accent); }
+
+  .trend-content h3 { margin-bottom: 0.5rem; }
+
+  /* MIND MAP FINAL */
+  .mindmap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mindmap-center {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: var(--bg);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    padding: 1.2rem 2rem;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 3rem;
+  }
+
+  .mindmap-branches {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .branch {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.2rem;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .branch:hover { border-color: rgba(232,197,71,0.4); }
+
+  .branch-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .branch-items { list-style: none; }
+  .branch-items li {
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding: 0.2rem 0;
+    border-bottom: 1px solid rgba(232,197,71,0.04);
+  }
+  .branch-items li:last-child { border-bottom: none; }
+
+  /* ETHICS SECTION */
+  .ethics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+
+  .ethics-item {
+    background: var(--bg);
+    padding: 2rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .ethics-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin: 0;
+    letter-spacing: 0.1em;
+  }
+
+  /* SEPARATOR */
+  .sep {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  .sep-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .sep-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* STRATEGY STEPS */
+  .steps { counter-reset: step; }
+
+  .step {
+    display: flex;
+    gap: 2rem;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--border);
+    counter-increment: step;
+    position: relative;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    min-width: 30px;
+    padding-top: 0.3rem;
+  }
+
+  .step-num::before { content: counter(step, decimal-leading-zero); }
+
+  .step-content h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+  .step-content p { font-size: 0.9rem; margin: 0; }
+
+  /* TOOL BADGES */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .tool-badge {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.3s;
+  }
+
+  .tool-badge:hover { border-color: rgba(62,207,207,0.4); }
+
+  .tool-badge .icon { font-size: 1.4rem; }
+
+  .tool-badge .name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.1rem;
+  }
+
+  .tool-badge .desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .mindmap-branches { grid-template-columns: 1fr 1fr; }
+    .ethics-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .index-bar { padding: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Posicionamento Digital</div>
+  <ul class="nav-links">
+    <li><a href="#conceito">Conceito</a></li>
+    <li><a href="#fundamentos">Fundamentos</a></li>
+    <li><a href="#estrategias">Estratégias</a></li>
+    <li><a href="#metricas">Métricas</a></li>
+    <li><a href="#sistemas">Sistemas</a></li>
+    <li><a href="#especialistas">Especialistas</a></li>
+    <li><a href="#tendencias">Tendências</a></li>
+    <li><a href="#estrutura">Estrutura</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-tag">Trabalho Acadêmico · Sistemas de Informação</div>
+  <h1>Posicionamento<br><em>Digital</em></h1>
+  <p class="hero-sub">Um guia estratégico completo sobre como construir, gerenciar e medir sua presença e autoridade no ambiente digital.</p>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Explorar conteúdo
+  </div>
+</section>
+
+<!-- INDEX BAR -->
+<div class="index-bar">
+  <a class="index-item" href="#conceito"><span class="num">01</span> Conceito Central</a>
+  <a class="index-item" href="#fundamentos"><span class="num">02</span> Fundamentos</a>
+  <a class="index-item" href="#estrategias"><span class="num">03</span> Estratégias</a>
+  <a class="index-item" href="#metricas"><span class="num">04</span> Métricas</a>
+  <a class="index-item" href="#sistemas"><span class="num">05</span> Sistemas de Info</a>
+  <a class="index-item" href="#especialistas"><span class="num">06</span> Especialistas</a>
+  <a class="index-item" href="#tendencias"><span class="num">07</span> Tendências</a>
+  <a class="index-item" href="#estrutura"><span class="num">08</span> Estrutura Final</a>
+</div>
+
+<!-- 01 - CONCEITO CENTRAL -->
+<section id="conceito">
+  <div class="section-label"><span class="num">01</span> Conceito Central</div>
+  <h2>O que é Posicionamento <em>Digital?</em></h2>
+
+  <div class="grid-2">
+    <div>
+      <p>Posicionamento digital é a percepção estratégica que uma marca, empresa ou pessoa constrói no ambiente online. Não se trata apenas de estar presente, mas de <strong style="color: var(--text)">ser encontrado, reconhecido e lembrado</strong> da forma certa, pelo público certo, no momento certo.</p>
+      <p>É o conjunto de ações, narrativas e experiências que moldam como você é percebido digitalmente — diferenciando-o da concorrência e gerando valor real junto à audiência.</p>
+      <div class="highlight">
+        <p>"Posicionamento não é o que você faz com o produto. É o que você faz com a mente do cliente em potencial."</p>
+      </div>
+    </div>
+    <div>
+      <h3>Presença Digital <span style="color:var(--muted); font-size:0.8rem; font-family:'Space Mono',monospace;">vs.</span> Posicionamento Digital</h3>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Dimensão</th>
+            <th>Presença Digital</th>
+            <th>Posicionamento Digital</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Foco</td>
+            <td>Existir online</td>
+            <td>Ser percebido estrategicamente</td>
+          </tr>
+          <tr>
+            <td>Ação</td>
+            <td>Criar perfis e canais</td>
+            <td>Construir autoridade e confiança</td>
+          </tr>
+          <tr>
+            <td>Resultado</td>
+            <td>Visibilidade</td>
+            <td>Diferenciação e preferência</td>
+          </tr>
+          <tr>
+            <td>Medida</td>
+            <td>Seguidores, acessos</td>
+            <td>Engajamento, conversão, lealdade</td>
+          </tr>
+          <tr>
+            <td>Exemplo</td>
+            <td>Ter um site</td>
+            <td>Ser referência no nicho</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 02 - FUNDAMENTOS TEÓRICOS -->
+<section id="fundamentos">
+  <div class="section-label"><span class="num">02</span> Fundamentos Teóricos</div>
+  <h2>Os pilares que sustentam o <em>posicionamento</em></h2>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-icon">🏛️</div>
+      <h3>Branding Pessoal</h3>
+      <p>A construção deliberada da imagem de um indivíduo como profissional. Envolve propósito, valores, voz e consistência visual-comunicativa.</p>
+      <div class="tags">
+        <span class="tag accent">Identidade</span>
+        <span class="tag">Narrativa</span>
+        <span class="tag">Autenticidade</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-icon">🏢</div>
+      <h3>Branding Institucional</h3>
+      <p>A gestão da imagem de uma organização: missão, visão, valores e a experiência consistente que ela entrega em todos os pontos de contato digitais.</p>
+      <div class="tags">
+        <span class="tag purple">Propósito</span>
+        <span class="tag">Consistência</span>
+        <span class="tag">Experiência</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-icon">🎯</div>
+      <h3>Persona e Audiência</h3>
+      <p>Compreender profundamente quem é o público-alvo — suas dores, desejos, comportamentos e onde consome conteúdo — é base do posicionamento eficaz.</p>
+      <div class="tags">
+        <span class="tag teal">ICP</span>
+        <span class="tag">Segmentação</span>
+        <span class="tag">Empatia</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">04</div>
+      <div class="card-icon">📢</div>
+      <h3>Reputação Online</h3>
+      <p>O conjunto de percepções que o público tem baseado em avaliações, menções, comentários e comportamento da marca no ambiente digital.</p>
+      <div class="tags">
+        <span class="tag accent">ORM</span>
+        <span class="tag">Monitoramento</span>
+        <span class="tag">Credibilidade</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">05</div>
+      <div class="card-icon">🔍</div>
+      <h3>SEO e Descoberta</h3>
+      <p>Otimização para mecanismos de busca: como o conteúdo é estruturado para que o público certo encontre você organicamente quando busca por soluções.</p>
+      <div class="tags">
+        <span class="tag purple">Orgânico</span>
+        <span class="tag">Palavras-chave</span>
+        <span class="tag">Autoridade</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">06</div>
+      <div class="card-icon">⚖️</div>
+      <h3>Ética Digital</h3>
+      <p>A responsabilidade de gerir a imagem com transparência, respeito à privacidade do usuário e veracidade das informações publicadas e promovidas.</p>
+      <div class="tags">
+        <span class="tag teal">Transparência</span>
+        <span class="tag">Privacidade</span>
+        <span class="tag">Veracidade</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 - ESTRATÉGIAS -->
+<section id="estrategias">
+  <div class="section-label"><span class="num">03</span> Estratégias</div>
+  <h2>Como construir um posicionamento <em>sólido</em></h2>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="margin-bottom:1.5rem; color: var(--accent); font-size:1rem; font-family:'Space Mono',monospace; letter-spacing:0.1em; font-weight:400;">ESTRATÉGIA DE CONTEÚDO</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h3>Definir tom e voz</h3>
+            <p>Estabelecer como a marca se comunica: formal, descontraída, inspiradora ou técnica. A consistência gera reconhecimento.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h3>Calendário editorial</h3>
+            <p>Planejar temas, formatos (reels, carrosséis, artigos, podcasts) e frequência para manter presença constante e relevante.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h3>Conteúdo de valor</h3>
+            <p>Publicar educação, entretenimento ou inspiração genuínos — não apenas promoção — para construir autoridade e confiança.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h3>Storytelling e narrativa</h3>
+            <p>Humanizar a marca com histórias reais, bastidores e propósito. Pessoas se conectam com pessoas, não com logos.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <div class="step-content">
+            <h3>Interação e comunidade</h3>
+            <p>Responder comentários, estimular conversas e criar senso de pertencimento ao redor da marca ou criador.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="margin-bottom:1.5rem; color: var(--accent); font-size:1rem; font-family:'Space Mono',monospace; letter-spacing:0.1em; font-weight:400;">MARKETING DE INFLUÊNCIA</h3>
+      <div class="card" style="margin-bottom:1rem;">
+        <h3>Marketing Pessoal</h3>
+        <p>Estratégia de autopromover habilidades e expertise para conquistar oportunidades profissionais: LinkedIn ativo, portfólio digital, palestras online e publicações autorais.</p>
+        <div class="tags">
+          <span class="tag accent">LinkedIn</span>
+          <span class="tag">Portfolio</span>
+          <span class="tag">Networking</span>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1rem;">
+        <h3>Micro e Nano Influenciadores</h3>
+        <p>Criadores com 1k–100k seguidores têm taxas de engajamento até 8x maiores que mega influenciadores. Nichos específicos geram conversão real.</p>
+        <div class="tags">
+          <span class="tag purple">Nicho</span>
+          <span class="tag">Autenticidade</span>
+          <span class="tag">ROI</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Gestão de Reputação (ORM)</h3>
+        <p>Monitorar menções, responder crises publicamente com agilidade, incentivar avaliações positivas e construir ativos de reputação antes de precisar deles.</p>
+        <div class="tags">
+          <span class="tag teal">Crise</span>
+          <span class="tag">Avaliações</span>
+          <span class="tag">Monitoramento</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 - MÉTRICAS -->
+<section id="metricas">
+  <div class="section-label"><span class="num">04</span> Métricas</div>
+  <h2>O que <em>medir</em> para avaliar o posicionamento</h2>
+
+  <div class="grid-4" style="margin-bottom:3rem;">
+    <div class="metric-card">
+      <div class="metric-num">↗</div>
+      <div class="metric-label">Alcance</div>
+      <p style="font-size:0.8rem; margin-top:0.8rem;">Quantas pessoas únicas tiveram contato com o conteúdo em determinado período</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">❤</div>
+      <div class="metric-label">Engajamento</div>
+      <p style="font-size:0.8rem; margin-top:0.8rem;">Taxa de interação: curtidas, comentários, salvamentos e compartilhamentos sobre o alcance</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">%</div>
+      <div class="metric-label">Conversão</div>
+      <p style="font-size:0.8rem; margin-top:0.8rem;">Proporção de visitantes que realizam a ação desejada (compra, cadastro, contato)</p>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">★</div>
+      <div class="metric-label">Sentiment</div>
+      <p style="font-size:0.8rem; margin-top:0.8rem;">Análise do tom (positivo/negativo/neutro) das menções e comentários sobre a marca</p>
+    </div>
+  </div>
+
+  <div class="sep"><div class="sep-line"></div><div class="sep-dot"></div><div class="sep-line"></div></div>
+
+  <h3 style="margin-bottom:1.5rem;">Métricas por Funil</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Etapa do Funil</th>
+        <th>Objetivo</th>
+        <th>Métricas Principais</th>
+        <th>Ferramentas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>🔍 Descoberta (Topo)</td>
+        <td>Atrair novos públicos</td>
+        <td>Alcance, Impressões, Tráfego orgânico</td>
+        <td>Google Analytics, Meta Insights</td>
+      </tr>
+      <tr>
+        <td>💡 Consideração (Meio)</td>
+        <td>Gerar interesse e confiança</td>
+        <td>Taxa de engajamento, Tempo na página, Seguidores</td>
+        <td>HubSpot, Hootsuite</td>
+      </tr>
+      <tr>
+        <td>✅ Decisão (Fundo)</td>
+        <td>Converter e fidelizar</td>
+        <td>Taxa de conversão, CPL, CAC, ROI</td>
+        <td>CRM, Google Ads</td>
+      </tr>
+      <tr>
+        <td>🔄 Retenção (Pós)</td>
+        <td>Manter e transformar em promotores</td>
+        <td>NPS, LTV, Taxa de recompra, Reviews</td>
+        <td>Hotmart, RD Station</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 05 - SISTEMAS DE INFORMAÇÃO -->
+<section id="sistemas">
+  <div class="section-label"><span class="num">05</span> Sistemas de Informação</div>
+  <h2>Ferramentas que <em>apoiam</em> o posicionamento</h2>
+
+  <p style="max-width:650px;">Os Sistemas de Informação transformam dados dispersos em inteligência estratégica, permitindo decisões baseadas em evidências sobre conteúdo, canais e audiência.</p>
+
+  <div class="tools-grid">
+    <div class="tool-badge">
+      <div class="icon">📊</div>
+      <div>
+        <div class="name">Google Analytics 4</div>
+        <div class="desc">Comportamento de usuários no site, origem de tráfego e conversões</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">📱</div>
+      <div>
+        <div class="name">Meta Business Suite</div>
+        <div class="desc">Gestão e análise de desempenho no Instagram e Facebook</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">🔎</div>
+      <div>
+        <div class="name">Google Search Console</div>
+        <div class="desc">Visibilidade orgânica, palavras-chave e erros de indexação</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">📡</div>
+      <div>
+        <div class="name">Mention / Brand24</div>
+        <div class="desc">Social listening: monitoramento de menções em tempo real</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">🤖</div>
+      <div>
+        <div class="name">Sprout Social / Hootsuite</div>
+        <div class="desc">Agendamento, gestão e relatórios de redes sociais</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">🧲</div>
+      <div>
+        <div class="name">SEMrush / Ahrefs</div>
+        <div class="desc">Análise de SEO, concorrência e oportunidades de conteúdo</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">📧</div>
+      <div>
+        <div class="name">RD Station / HubSpot</div>
+        <div class="desc">CRM, automação de marketing e gestão de leads</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">🎨</div>
+      <div>
+        <div class="name">Canva / Adobe Express</div>
+        <div class="desc">Criação visual de conteúdo com identidade consistente</div>
+      </div>
+    </div>
+    <div class="tool-badge">
+      <div class="icon">⚡</div>
+      <div>
+        <div class="name">Linktree / Beacons</div>
+        <div class="desc">Hub de links para centralizar pontos de contato digitais</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 - ESPECIALISTAS E REFERÊNCIAS -->
+<section id="especialistas">
+  <div class="section-label"><span class="num">06</span> Especialistas & Referências</div>
+  <h2>Vozes que <em>moldam</em> o campo</h2>
+
+  <div class="grid-2">
+    <div class="expert-card">
+      <div class="expert-avatar">SA</div>
+      <div class="expert-info">
+        <h3>Seth Godin</h3>
+        <div class="expert-role">Marketing Estratégico</div>
+        <p>Autor de "Isso é Marketing" e "Tribos". Defende o posicionamento baseado em permissão, nicho e mudança genuína — não interrupção.</p>
+      </div>
+    </div>
+    <div class="expert-card">
+      <div class="expert-avatar">GV</div>
+      <div class="expert-info">
+        <h3>Gary Vaynerchuk</h3>
+        <div class="expert-role">Social Media & Conteúdo</div>
+        <p>Pioneiro na construção de marca pessoal via conteúdo massivo e autêntico. Defende "documentar ao invés de criar".</p>
+      </div>
+    </div>
+    <div class="expert-card">
+      <div class="expert-avatar">RL</div>
+      <div class="expert-info">
+        <h3>Rand Fishkin</h3>
+        <div class="expert-role">SEO & Visibilidade Digital</div>
+        <p>Fundador da Moz e SparkToro. Referência em SEO, marketing de conteúdo e compreensão da jornada de descoberta do cliente.</p>
+      </div>
+    </div>
+    <div class="expert-card">
+      <div class="expert-avatar">MR</div>
+      <div class="expert-info">
+        <h3>Martha Rogers</h3>
+        <div class="expert-role">Marketing de Relacionamento</div>
+        <p>Co-autora de "Marketing 1to1". Pioneira no conceito de personalização e construção de relacionamento individual com o cliente digital.</p>
+      </div>
+    </div>
+    <div class="expert-card">
+      <div class="expert-avatar">PK</div>
+      <div class="expert-info">
+        <h3>Philip Kotler</h3>
+        <div class="expert-role">Marketing 5.0</div>
+        <p>Em "Marketing 5.0", aborda a fusão entre tecnologia e humanidade na construção de marcas relevantes na era digital.</p>
+      </div>
+    </div>
+    <div class="expert-card">
+      <div class="expert-avatar">CB</div>
+      <div class="expert-info">
+        <h3>Conrado Adolpho</h3>
+        <div class="expert-role">Marketing Digital Brasil</div>
+        <p>Autor do "8Ps do Marketing Digital", referência brasileira em estratégias de posicionamento online para o mercado nacional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 - TENDÊNCIAS -->
+<section id="tendencias">
+  <div class="section-label"><span class="num">07</span> Tendências</div>
+  <h2>O futuro do posicionamento <em>digital</em></h2>
+
+  <div class="trend-item">
+    <div class="trend-num">01</div>
+    <div class="trend-content">
+      <h3>Inteligência Artificial Generativa</h3>
+      <p>IA está transformando a criação de conteúdo, personalização em escala e análise de audiência. Ferramentas como ChatGPT, Midjourney e sistemas de IA permitem que marcas produzam conteúdo mais rápido e personalizado — mas o diferencial continua sendo a voz e perspectiva humana autêntica.</p>
+      <div class="tags"><span class="tag accent">GenAI</span><span class="tag">Automação</span><span class="tag">Personalização</span></div>
+    </div>
+  </div>
+
+  <div class="trend-item">
+    <div class="trend-num">02</div>
+    <div class="trend-content">
+      <h3>Social Listening Avançado</h3>
+      <p>Monitoramento em tempo real não apenas de menções diretas, mas de conversas relevantes ao redor do nicho. Permite identificar oportunidades, crises emergentes e necessidades não verbalizadas do público antes da concorrência.</p>
+      <div class="tags"><span class="tag purple">Escuta Ativa</span><span class="tag">Dados</span><span class="tag">Tempo Real</span></div>
+    </div>
+  </div>
+
+  <div class="trend-item">
+    <div class="trend-num">03</div>
+    <div class="trend-content">
+      <h3>Hiperpersonalização</h3>
+      <p>A expectativa do usuário moderno é de experiências adaptadas ao seu comportamento e preferências individuais. Marcas que entregam conteúdo e comunicação sob medida em cada touchpoint digital constroem laços de lealdade muito mais fortes.</p>
+      <div class="tags"><span class="tag teal">UX</span><span class="tag">Dados Comportamentais</span><span class="tag">1:1</span></div>
+    </div>
+  </div>
+
+  <div class="trend-item">
+    <div class="trend-num">04</div>
+    <div class="trend-content">
+      <h3>Creator Economy e Comunidades</h3>
+      <p>O poder se descentraliza das mídias tradicionais para criadores independentes e comunidades de nicho. Marcas que cocriam com criadores e investem em comunidades próprias (Discord, grupos, newsletters) constroem audiências mais engajadas e resilientes.</p>
+      <div class="tags"><span class="tag accent">Criadores</span><span class="tag">Comunidade</span><span class="tag">Newsletter</span></div>
+    </div>
+  </div>
+
+  <div class="trend-item">
+    <div class="trend-num">05</div>
+    <div class="trend-content">
+      <h3>Privacidade e Dados First-Party</h3>
+      <p>Com o fim dos cookies de terceiros e regulamentações como LGPD e GDPR, construir bases de dados próprias (emails, telefones, preferências) se torna vantagem competitiva. O posicionamento do futuro é construído com consentimento e transparência.</p>
+      <div class="tags"><span class="tag purple">LGPD</span><span class="tag">First-Party Data</span><span class="tag">Consentimento</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉTICA (dentro de tendências ou independente) -->
+<section style="background: var(--surface2); border-bottom: 1px solid var(--border);">
+  <div class="section-label"><span class="num">+</span> Ética e Responsabilidade</div>
+  <h2>A dimensão <em>ética</em> do posicionamento digital</h2>
+  <p style="max-width:650px; margin-bottom:2.5rem;">Gerir a imagem digital implica responsabilidade com o impacto que o conteúdo e as ações geram. A ética não é restrição — é vantagem competitiva sustentável.</p>
+
+  <div class="ethics-grid">
+    <div class="ethics-item">
+      <div class="ethics-icon">🔍</div>
+      <div>
+        <h3>Transparência</h3>
+        <p>Indicar claramente conteúdos patrocinados, parcerias comerciais e não enganar o público com promessas falsas.</p>
+      </div>
+    </div>
+    <div class="ethics-item">
+      <div class="ethics-icon">🔒</div>
+      <div>
+        <h3>Privacidade de Dados</h3>
+        <p>Respeitar a LGPD, coletar dados com consentimento e tratar informações pessoais com responsabilidade.</p>
+      </div>
+    </div>
+    <div class="ethics-item">
+      <div class="ethics-icon">✅</div>
+      <div>
+        <h3>Veracidade</h3>
+        <p>Não propagar desinformação, não manipular métricas com seguidores falsos e apresentar resultados reais.</p>
+      </div>
+    </div>
+    <div class="ethics-item">
+      <div class="ethics-icon">🤝</div>
+      <div>
+        <h3>Inclusão e Representatividade</h3>
+        <p>Construir posicionamento que reflita diversidade, respeite diferentes grupos e evite perpetuar estereótipos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 - ESTRUTURA FINAL -->
+<section id="estrutura">
+  <div class="section-label"><span class="num">08</span> Estrutura Final</div>
+  <h2>Mapa mental do <em>posicionamento digital</em></h2>
+  <p style="max-width:600px; margin-bottom:3rem;">Uma visão integrada de todos os elementos que compõem uma estratégia de posicionamento digital sólida e sustentável.</p>
+
+  <div class="mindmap">
+    <div class="mindmap-center">🎯 Posicionamento Digital</div>
+    <div class="mindmap-branches">
+      <div class="branch">
+        <div class="branch-title">Conceito</div>
+        <ul class="branch-items">
+          <li>Percepção estratégica</li>
+          <li>Diferenciação</li>
+          <li>Presença × Posicionamento</li>
+          <li>Propósito de marca</li>
+        </ul>
+      </div>
+      <div class="branch">
+        <div class="branch-title">Fundamentos</div>
+        <ul class="branch-items">
+          <li>Branding pessoal</li>
+          <li>Branding institucional</li>
+          <li>Persona e audiência</li>
+          <li>SEO e descoberta</li>
+        </ul>
+      </div>
+      <div class="branch">
+        <div class="branch-title">Estratégias</div>
+        <ul class="branch-items">
+          <li>Conteúdo de valor</li>
+          <li>Storytelling</li>
+          <li>Marketing de influência</li>
+          <li>Gestão de reputação</li>
+        </ul>
+      </div>
+      <div class="branch">
+        <div class="branch-title">Métricas</div>
+        <ul class="branch-items">
+          <li>Alcance e impressões</li>
+          <li>Taxa de engajamento</li>
+          <li>Conversão e ROI</li>
+          <li>NPS e Sentiment</li>
+        </ul>
+      </div>
+      <div class="branch">
+        <div class="branch-title">Sistemas</div>
+        <ul class="branch-items">
+          <li>Google Analytics</li>
+          <li>SEMrush / Ahrefs</li>
+          <li>Social listening</li>
+          <li>CRM e automação</li>
+        </ul>
+      </div>
+      <div class="branch">
+        <div class="branch-title">Especialistas</div>
+        <ul class="branch-items">
+          <li>Seth Godin</li>
+          <li>Philip Kotler</li>
+          <li>Gary Vaynerchuk</li>
+          <li>Conrado Adolpho</li>
+        </ul>
+      </div>
+      <div class="branch">
+        <div class="branch-title">Tendências</div>
+        <ul class="branch-items">
+          <li>IA Generativa</li>
+          <li>Hiperpersonalização</li>
+          <li>Social Listening</li>
+          <li>First-Party Data</li>
+        </ul>
+      </div>
+      <div class="branch">
+        <div class="branch-title">Ética</div>
+        <ul class="branch-items">
+          <li>Transparência</li>
+          <li>Privacidade / LGPD</li>
+          <li>Veracidade</li>
+          <li>Inclusão</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: EQUIPE E CRÉDITOS ACADÊMICOS -->
+<section id="equipe" style="background: var(--surface2); border-bottom: 1px solid var(--border); padding: 6rem 3rem;">
+
+  <!-- Section label — same pattern as every other section -->
+  <div class="section-label"><span class="num">+</span> Equipe & Créditos Acadêmicos</div>
+  <h2>Quem fez este <em>trabalho</em></h2>
+
+  <!-- Intro text -->
+  <p style="max-width: 640px; margin-bottom: 3.5rem;">
+    Este trabalho integra o ciclo de seminários da disciplina <strong style="color: var(--text);">Sistemas de Informações Gerenciais</strong>, orientado pelo Professor Dr. Arlindino Neto. — <span style="color: var(--accent);">Universidade Federal da Bahia</span>
+  </p>
+
+  <!-- TEAM CIRCLES -->
+  <div style="display: flex; justify-content: center; align-items: flex-end; gap: 3rem; flex-wrap: wrap; margin-bottom: 4rem;">
+
+    <!-- Circle 1: Orientador — larger -->
+    <div style="text-align: center;">
+      <div style="
+        width: 148px; height: 148px; border-radius: 50%;
+        border: 1px solid var(--accent);
+        background: var(--surface);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        margin: 0 auto 1.2rem; gap: 0.4rem;
+        position: relative;
+      ">
+        <!-- subtle glow ring -->
+        <div style="position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(232,197,71,0.15);"></div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span style="font-family:'Space Mono',monospace; font-size:0.48rem; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase;">foto</span>
+      </div>
+      <div style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.9rem; color:var(--text); margin-bottom:0.3rem;">Prof. Dr. Arlindino Neto</div>
+      <div style="font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.2em;">Orientador</div>
+    </div>
+
+    <!-- Circle 2 -->
+    <div style="text-align: center;">
+      <div style="
+        width: 120px; height: 120px; border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        margin: 0 auto 1.2rem; gap: 0.4rem;
+        transition: border-color 0.3s;
+      " onmouseover="this.style.borderColor='rgba(232,197,71,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span style="font-family:'Space Mono',monospace; font-size:0.48rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase;">foto</span>
+      </div>
+      <div style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.9rem; color:var(--text); margin-bottom:0.3rem;">Gillian Lima</div>
+      <div style="font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.2em;">Organizadora</div>
+    </div>
+
+    <!-- Circle 3 -->
+    <div style="text-align: center;">
+      <div style="
+        width: 120px; height: 120px; border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        margin: 0 auto 1.2rem;
+        overflow: hidden;
+        transition: border-color 0.3s;
+      " onmouseover="this.style.borderColor='rgba(232,197,71,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+        <img
+          src="giu-avatar.jpeg"
+          alt="Retrato profissional de Giullia Salton Pietroni, com cabelos loiros e óculos, camisa branca em fundo escuro."
+          width="120"
+          height="120"
+          loading="lazy"
+          decoding="async"
+          style="width: 100%; height: 100%; object-fit: cover; display: block;"
+        />
+      </div>
+      <div style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.9rem; color:var(--text); margin-bottom:0.3rem;">Giullia Salton Pietroni</div>
+      <div style="font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.2em;">Organizadora</div>
+    </div>
+
+    <!-- Circle 4 -->
+    <div style="text-align: center;">
+      <div style="
+        width: 120px; height: 120px; border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        margin: 0 auto 1.2rem; gap: 0.4rem;
+        transition: border-color 0.3s;
+      " onmouseover="this.style.borderColor='rgba(232,197,71,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span style="font-family:'Space Mono',monospace; font-size:0.48rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase;">foto</span>
+      </div>
+      <div style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.9rem; color:var(--text); margin-bottom:0.3rem;">Juliana Dantas</div>
+      <div style="font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.2em;">Organizadora</div>
+    </div>
+
+  </div>
+
+  <!-- DIVIDER — same sep pattern -->
+  <div class="sep"><div class="sep-line"></div><div class="sep-dot"></div><div class="sep-line"></div></div>
+
+  <!-- SOCIAL BUTTONS -->
+  <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem;">
+    <a href="https://youtube.com/@TIEMFOCO" target="_blank" style="
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 0.9rem 1.8rem; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    " onmouseover="this.style.borderColor='rgba(232,197,71,0.5)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+      ▶ Inscreva-se @TIEMFOCO
+    </a>
+    <a href="https://instagram.com/tiemfoco.ufba" target="_blank" style="
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      padding: 0.9rem 1.8rem; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    " onmouseover="this.style.borderColor='rgba(232,197,71,0.5)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+      📸 Siga @tiemfoco.ufba
+    </a>
+  </div>
+
+</section>
+
+<!-- SECTION: WEBINAR EVENT CARD -->
+<section style="background: var(--bg); padding: 6rem 3rem; border-bottom: 1px solid var(--border);">
+
+  <div class="section-label"><span class="num">↗</span> Próximo Evento</div>
+
+  <!-- EVENT CARD — floating, prominent -->
+  <a href="https://instagram.com/tiemfoco.ufba" target="_blank" style="text-decoration: none; display: block; max-width: 940px;">
+    <div style="
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 8px solid var(--accent);
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    " onmouseover="this.style.borderColor='rgba(232,197,71,0.5)'" onmouseout="this.style.borderColor='var(--border)'">
+
+      <!-- background grid echo -->
+      <div style="
+        position: absolute; inset: 0;
+        background-image: linear-gradient(rgba(232,197,71,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,197,71,0.025) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+      "></div>
+
+      <!-- EM BREVE tag — top right -->
+      <div style="
+        position: absolute; top: 1.4rem; right: 1.6rem;
+        background: var(--accent); color: var(--bg);
+        font-family: 'Space Mono', monospace; font-size: 0.55rem;
+        letter-spacing: 0.25em; text-transform: uppercase;
+        padding: 0.3rem 0.75rem;
+      ">EM BREVE</div>
+
+      <!-- LEFT COLUMN -->
+      <div style="padding: 3rem 3rem 3rem 2.5rem; position: relative;">
+
+        <!-- Date block -->
+        <div style="display: flex; align-items: flex-end; gap: 1rem; margin-bottom: 1.8rem;">
+          <div style="font-family:'Playfair Display',serif; font-size: 6rem; font-weight:900; color:var(--text); line-height:1;">18</div>
+          <div style="padding-bottom: 0.8rem;">
+            <div style="font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--accent); letter-spacing:0.25em; margin-bottom:0.3rem;">MAIO 2026</div>
+            <div style="font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--muted);">20:30h</div>
+          </div>
+        </div>
+
+        <!-- Divider accent -->
+        <div style="width:50px; height:1px; background: var(--accent); margin-bottom: 1.6rem;"></div>
+
+        <!-- Title -->
+        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--text); line-height:1.15; margin-bottom:0.7rem;">
+          Posicionamento<br><em style="color:var(--accent);">Digital</em>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--muted); margin-bottom:2.2rem;">
+          Transmissão ao vivo via YouTube
+        </div>
+
+        <!-- CTA Button — same accent style as site -->
+        <div style="
+          display: inline-flex; align-items: center; gap: 0.5rem;
+          background: var(--accent); color: var(--bg);
+          font-family: 'Space Mono', monospace; font-size: 0.62rem;
+          letter-spacing: 0.12em; text-transform: uppercase;
+          padding: 0.9rem 1.5rem;
+        ">ACESSAR POST NO INSTAGRAM ↗</div>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div style="
+        background: var(--surface2);
+        border-left: 1px solid var(--border);
+        padding: 3rem 2rem;
+        display: flex; flex-direction: column; gap: 1.8rem;
+        position: relative;
+      ">
+
+        <div>
+          <div style="font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--accent); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:0.9rem;">Palestrantes</div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--muted); line-height:2;">
+            — Geovana Andrade<br>— Tuane Alves
+          </div>
+        </div>
+
+        <div style="height:1px; background:var(--border);"></div>
+
+        <div>
+          <div style="font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--accent); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:0.9rem;">Organização</div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--muted); line-height:2;">
+            — Gillian Lima<br>— Giullia Salton Pietroni<br>— Juliana Dantas
+          </div>
+        </div>
+
+        <div style="height:1px; background:var(--border);"></div>
+
+        <div>
+          <div style="font-family:'Space Mono',monospace; font-size:0.6rem; color:var(--accent); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:0.9rem;">Coordenação Geral</div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--muted); line-height:1.8;">
+            — Prof. Dr. Arlindino Neto · UFBA
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </a>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex; align-items:center; gap:1.2rem;">
+    <span style="font-family:'Space Mono',monospace; font-size:1.1rem; font-weight:700; color:var(--accent); letter-spacing:0.05em;">PD</span>
+    <span style="width:1px; height:20px; background:var(--border);"></span>
+    <span style="font-family:'Space Mono',monospace; font-size:0.65rem; color:var(--muted); letter-spacing:0.12em;">Posicionamento Digital · SIG · UFBA</span>
+  </div>
+  <p style="font-family:'Space Mono',monospace; font-size:0.62rem; color:var(--muted); letter-spacing:0.08em; margin:0;">© 2026 · Todos os direitos reservados</p>
+</footer>
+
+<script>
+  // Smooth active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--accent)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Fade-in on scroll
+  const cards = document.querySelectorAll('.card, .expert-card, .tool-badge, .metric-card, .trend-item');
+  
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = `fadeUp 0.5s ease ${(i % 4) * 0.08}s both`;
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  cards.forEach(c => {
+    c.style.opacity = '0';
+    fadeObserver.observe(c);
+  });
+</script>
+</body>
+</html>
