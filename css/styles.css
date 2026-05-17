@@ -390,7 +390,16 @@
   .conceito-compare h3 {
     margin-bottom: 1.25rem;
   }
+  .expert-info h3 a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+  }
 
+  .expert-info h3 a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
   /* TABLE — rolagem horizontal no mobile (wrapper + tabela real) */
   .table-scroll {
     width: 100%;
